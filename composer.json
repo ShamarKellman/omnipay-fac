@@ -1,0 +1,29 @@
+{
+    "name": "shamarkellman/omnipay-fac",
+    "description": "First Atlantic Commerce driver for the Omnipay PHP payment processing library",
+    "keywords": [
+        "first atlantic commerce",
+        "fac",
+        "payment processing",
+        "omnipay",
+        "gateway"
+    ],
+    "homepage": "https://github.com/bitpiston/omnipay-first-atlantic-commerce",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shamar Kellman",
+            "email": "shamarkellman@gmail.com"
+        }
+    ],
+    "require": {
+        "omnipay/common": "^3",
+        "league/iso3166": "~1.0.1"
+    },
+    "require-dev": {
+        "omnipay/tests": "^3"
+    },
+    "autoload": {
+        "psr-4": { "Omnipay\\FAC\\" : "src" }
+    }
+}
