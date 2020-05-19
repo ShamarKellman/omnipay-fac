@@ -89,7 +89,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     /**
      * @param mixed $data
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return Response
      */
     public function sendData($data)
     {

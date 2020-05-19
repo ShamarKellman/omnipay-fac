@@ -10,7 +10,7 @@ use Omnipay\FAC\Message\Response\CreateCardResponse;
  *
  * Required Parameters:
  * customerReference - name of the customer using the card
- * card - Instantiation of Omnipay\FirstAtlanticCommerce\CreditCard()
+ * card - Instantiation of Omnipay\FAC\CreditCard()
  *
  */
 class CreateCardRequest extends AbstractRequest

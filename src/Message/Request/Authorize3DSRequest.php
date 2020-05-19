@@ -4,14 +4,14 @@
 namespace Omnipay\FAC\Message\Request;
 
 
-use Omnipay\FAC\Message\AuthorizeResponse;
+use Omnipay\FAC\Message\Response\Authorize3DSResponse;
 
 class Authorize3DSRequest extends AbstractRequest
 {
     /**
      * @var string;
      */
-    protected $requestName = 'AuthorizeRequest';
+    protected $requestName = 'Authorize3DSRequest';
 
     /**
      * Transaction code (flag as a authorization)
@@ -20,10 +20,10 @@ class Authorize3DSRequest extends AbstractRequest
      */
     protected $transactionCode = 04;
 
-    protected $authenticationResult;  //status
-    protected $cavvValue; //cavv
-    protected $eciIndicatorValue; //eci
-    protected $transactionStain; //xid
+    protected $authenticationResult;
+    protected $cavvValue;
+    protected $eciIndicatorValue;
+    protected $transactionStain;
 
     /**
      * Returns the signature for the request.
@@ -132,7 +132,7 @@ class Authorize3DSRequest extends AbstractRequest
         return [
             'TransactionDetails' => $transactionDetails,
             'CardDetails'        => $cardDetails,
-//            'MerchantResponseURL'=> 'https://ecm.firstatlanticcommerce.com/FACPGTest/receiveInfo.aspx',
+            'MerchantResponseURL'=> $this->getMerchantResponseURL(),
             'BillingDetails'     => $billingDetails,
             'ThreeDSecure Details'     => $threeDSecureDetails
         ];
@@ -170,12 +170,12 @@ class Authorize3DSRequest extends AbstractRequest
      *
      * @param  \SimpleXMLElement  $xml  Response xml object
      *
-     * @return AuthorizeResponse
+     * @return Authorize3DSResponse
      * @throws \Omnipay\Common\Exception\InvalidResponseException
      */
     protected function newResponse($xml)
     {
-        return new AuthorizeResponse($this, $xml);
+        return new Authorize3DSResponse($this, $xml);
     }
 
     /**

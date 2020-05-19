@@ -4,7 +4,7 @@ namespace Omnipay\FAC\Message;
 
 
 use Omnipay\FAC\Gateway;
-use Omnipay\FAC\Message\CreateCardResponse;
+use Omnipay\FAC\Message\Request\CreateCardRequest;
 use Omnipay\Tests\GatewayTestCase;
 
 /**
@@ -19,8 +19,14 @@ class CreateCardTest extends GatewayTestCase
 
     /** @var  Gateway */
     protected $gateway;
+
     /** @var  array */
     private $cardOptions;
+
+    /**
+     * @var CreateCardRequest
+     */
+    private $request;
 
     /**
      * Setup the gateway and card options for testing.

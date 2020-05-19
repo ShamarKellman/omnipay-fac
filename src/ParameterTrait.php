@@ -5,7 +5,7 @@ namespace Omnipay\FAC;
 trait ParameterTrait
 {
     /**
-     * @param string $value Merchant ID.
+     * @param  string  $value  Merchant ID.
      *
      * @return string $value Merchant ID.
      */
@@ -23,7 +23,7 @@ trait ParameterTrait
     }
 
     /**
-     * @param string $value Merchant Password.
+     * @param  string  $value  Merchant Password.
      *
      * @return string $value Merchant Password.
      */
@@ -41,7 +41,7 @@ trait ParameterTrait
     }
 
     /**
-     * @param string $value Acquirer ID.
+     * @param  string  $value  Acquirer ID.
      *
      * @return string $value Acquirer ID.
      */
@@ -59,7 +59,7 @@ trait ParameterTrait
     }
 
     /**
-     * @param boolean $value Require AVS Check.
+     * @param  boolean  $value  Require AVS Check.
      *
      * @return boolean $value Require AVS Check.
      */
@@ -74,5 +74,23 @@ trait ParameterTrait
     public function getRequireAvsCheck()
     {
         return $this->getParameter('requireAvsCheck');
+    }
+
+    /**
+     * @param  boolean  $value  Require AVS Check.
+     *
+     * @return boolean $value Require AVS Check.
+     */
+    public function setMerchantResponseURL($value)
+    {
+        return $this->setParameter('merchantResponseURL', $value);
+    }
+
+    /**
+     * @return boolean $value Require AVS Check.
+     */
+    public function getMerchantResponseURL()
+    {
+        return $this->getParameter('merchantResponseURL');
     }
 }

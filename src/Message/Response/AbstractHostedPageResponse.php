@@ -37,7 +37,7 @@ abstract class AbstractHostedPageResponse extends AbstractResponse
     }
 
     /**
-     * @return string|null Get the reponse code
+     * @return string|null Get the response code
      */
     public function getResponseCode()
     {
@@ -45,7 +45,7 @@ abstract class AbstractHostedPageResponse extends AbstractResponse
     }
 
     /**
-     * @return string|null Get the reponse code
+     * @return string|null Get the response code
      */
     public function getResponseCodeDescription()
     {

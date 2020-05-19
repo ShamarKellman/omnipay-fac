@@ -2,10 +2,12 @@
 
 namespace Omnipay\FAC;
 
+use Exception;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Http\Client;
 use Omnipay\Common\Http\ClientInterface;
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\NotificationInterface;
 use Omnipay\Common\Message\RequestInterface;
 use Omnipay\FAC\Message\Request\Authorize3DSRequest;
 use Omnipay\FAC\Message\Request\AuthorizeRequest;
@@ -26,8 +28,8 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
  *
  * @method RequestInterface completeAuthorize(array $options = array())
  * @method RequestInterface completePurchase(array $options = array())
- * @method \Omnipay\Common\Message\NotificationInterface acceptNotification(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface fetchTransaction(array $options = [])
+ * @method NotificationInterface acceptNotification(array $options = array())
+ * @method RequestInterface fetchTransaction(array $options = [])
  */
 class Gateway extends AbstractGateway
 {
@@ -52,11 +54,11 @@ class Gateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return [
-            'merchantId'       => null,
+            'merchantId' => null,
             'merchantPassword' => null,
-            'acquirerId'       => '464748',
-            'testMode'         => false,
-            'requireAvsCheck'  => true
+            'acquirerId' => '464748',
+            'testMode' => false,
+            'requireAvsCheck' => true
         ];
     }
 
@@ -85,7 +87,7 @@ class Gateway extends AbstractGateway
      * is transferred.  The transaction will need to be captured later
      * in order to effect payment. Un-captured charges expire in 7 days.
      *
-     * @param array $parameters
+     * @param  array  $parameters
      *
      * @return AbstractRequest
      */
@@ -95,7 +97,7 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param array $parameters
+     * @param  array  $parameters
      * @return AbstractRequest
      */
     public function authorize3DS(array $parameters = [])
@@ -110,7 +112,7 @@ class Gateway extends AbstractGateway
      *
      * Use this request to capture and process a previously created authorization.
      *
-     * @param array $parameters
+     * @param  array  $parameters
      *
      * @return AbstractRequest
      */
@@ -125,7 +127,7 @@ class Gateway extends AbstractGateway
      *  To charge a credit card, you create a new charge object.
      *  Authorize and immediately capture an amount on the customer’s card.
      *
-     * @param array $parameters
+     * @param  array  $parameters
      *
      * @return AbstractRequest
      */
@@ -146,7 +148,7 @@ class Gateway extends AbstractGateway
      * charged. The fees you were originally charged are also
      * refunded.
      *
-     * @param array $parameters
+     * @param  array  $parameters
      *
      * @return AbstractRequest
      */
@@ -159,7 +161,7 @@ class Gateway extends AbstractGateway
      * Fetch Transaction Request.
      *  Reverse an already submitted transaction that hasn't been settled.
      *
-     * @param array $parameters
+     * @param  array  $parameters
      *
      * @return AbstractRequest
      */
@@ -171,7 +173,7 @@ class Gateway extends AbstractGateway
     /**
      *  Retrieve the status of any previous transaction.
      *
-     * @param array $parameters
+     * @param  array  $parameters
      *
      * @return AbstractRequest
      */
@@ -189,7 +191,7 @@ class Gateway extends AbstractGateway
      * to an existing customer.  If a customerReference is passed in then
      * a card is added to an existing customer.
      *
-     * @param array $parameters
+     * @param  array  $parameters
      *
      * @return AbstractRequest
      */
@@ -205,7 +207,7 @@ class Gateway extends AbstractGateway
      * address or expiration date, you can do so without having to re-enter
      * the full card details.
      *
-     * @param array $parameters
+     * @param  array  $parameters
      *
      * @return AbstractRequest
      */
@@ -223,13 +225,14 @@ class Gateway extends AbstractGateway
      * delete the last remaining card on a customer or recipient, the
      * default_card attribute on the card's owner will become null.
      *
-     * @param array $parameters
+     * @param  array  $parameters
      *
      * @return AbstractRequest
+     * @throws Exception
      */
     public function deleteCard(array $parameters = array())
     {
-        //return $this->createRequest(DeleteCardRequest::class, $parameters);
+        throw new Exception('Method not implemented.');
     }
 
     /**
@@ -240,7 +243,7 @@ class Gateway extends AbstractGateway
      * Recurring payments in a cycle. The Order ID and Amount must match that of
      * the original Recurring Authorization request.
      *
-     * @param array $parameters
+     * @param  array  $parameters
      * @return AbstractRequest
      */
     public function cancelRecurring(array $parameters = [])
@@ -249,8 +252,8 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param array $options
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @param  array  $options
+     * @return AbstractRequest
      */
     public function fetchHostedTransaction(array $options = [])
     {
@@ -260,18 +263,12 @@ class Gateway extends AbstractGateway
     /**
      *  Authorize and immediately capture an amount on the customer’s card.
      *
-     * @param array $parameters
+     * @param  array  $parameters
      *
      * @return AbstractRequest
      */
     public function hostedPurchase(array $parameters = [])
     {
         return $this->createRequest(HostedPurchaseRequest::class, $parameters);
-    }
-
-    public function __call($name, $arguments)
-    {
-        // TODO: Implement @method \Omnipay\Common\Message\NotificationInterface acceptNotification(array $options = array())
-        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface fetchTransaction(array $options = [])
     }
 }

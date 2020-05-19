@@ -3,6 +3,7 @@
 namespace Omnipay\FAC\Message\Request;
 
 use Omnipay\Common\Message\ResponseInterface;
+use Omnipay\FAC\Message\Response\Response;
 
 /**
  * FACPG2 Transaction Modification Request
@@ -25,12 +26,13 @@ abstract class AbstractTransactionModificationRequest extends AbstractRequest
      * Validate and construct the data for the request
      *
      * @return array
+     * @throws \Omnipay\Common\Exception\InvalidRequestException
      */
     public function getData()
     {
         $this->validate('merchantId', 'merchantPassword', 'acquirerId', 'transactionId', 'amount');
 
-        $data = [
+        return [
             'AcquirerId'       => $this->getAcquirerId(),
             'Amount'           => $this->formatAmount(),
             'CurrencyExponent' => $this->getCurrencyDecimalPlaces(),
@@ -39,8 +41,6 @@ abstract class AbstractTransactionModificationRequest extends AbstractRequest
             'OrderNumber'      => $this->getTransactionId(),
             'Password'         => $this->getMerchantPassword()
         ];
-
-        return $data;
     }
 
     /**
@@ -68,7 +68,7 @@ abstract class AbstractTransactionModificationRequest extends AbstractRequest
      *
      * @param \SimpleXMLElement $xml Response xml object
      *
-     * @return ResponseInterface
+     * @return Response
      */
     protected function newResponse($xml)
     {

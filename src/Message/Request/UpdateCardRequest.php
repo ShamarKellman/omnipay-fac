@@ -10,7 +10,7 @@ use Omnipay\FAC\Message\Response\Response;
  * Required Parameters:
  * customerReference - The name of the customer
  * cardReference - This is the token created by FAC for the card being updated
- * card - Instantiation of the Omnipay\FirstAtlanticCommerce\CreditCard class
+ * card - Instantiation of the Omnipay\FAC\CreditCard class
  */
 class UpdateCardRequest extends AbstractRequest
 {

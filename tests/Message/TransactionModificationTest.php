@@ -4,6 +4,8 @@ namespace Omnipay\FAC\Message;
 
 
 use Omnipay\FAC\Gateway;
+use Omnipay\FAC\Message\Request\AbstractRequest;
+use Omnipay\FAC\Message\Request\AuthorizeRequest;
 use Omnipay\Tests\GatewayTestCase;
 
 /**

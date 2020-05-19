@@ -8,7 +8,7 @@ namespace Omnipay\FAC\Message\Request;
  * Required Parameters:
  * amount - Float ex. "10.00",
  * currency - Currency code ex. "USD",
- * card - Instantiation of Omnipay\FirstAtlanticCommerce\CreditCard
+ * card - Instantiation of Omnipay\FAC\CreditCard
  *
  * There are also 2 optional boolean parameters outside of the normal Omnipay parameters:
  * requireAVSCheck - will tell FAC that we want the to verify the address through AVS
