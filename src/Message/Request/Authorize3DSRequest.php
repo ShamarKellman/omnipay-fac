@@ -18,12 +18,7 @@ class Authorize3DSRequest extends AbstractRequest
      *
      * @var int;
      */
-    protected $transactionCode = 04;
-
-    protected $authenticationResult;
-    protected $cavvValue;
-    protected $eciIndicatorValue;
-    protected $transactionStain;
+    protected $transactionCode = 192;
 
     /**
      * Returns the signature for the request.
@@ -47,12 +42,10 @@ class Authorize3DSRequest extends AbstractRequest
      * Validate and construct the data for the request
      *
      * @return array
-     * @throws \Omnipay\Common\Exception\InvalidRequestException
-     * @throws \Omnipay\Common\Exception\InvalidCreditCardException
      */
     public function getData()
     {
-        $this->validate('merchantId', 'merchantPassword', 'acquirerId', 'transactionId', 'amount', 'currency', 'card');
+        $this->validate('merchantId', 'merchantPassword', 'acquirerId', 'transactionId', 'amount', 'currency', 'card', 'merchantResponseURL');
 
         // Check for AVS and require billingAddress1 and billingPostcode
         if ( $this->getRequireAvsCheck() )
@@ -115,27 +108,20 @@ class Authorize3DSRequest extends AbstractRequest
             'BillToFax'         => $this->getCard()->getFax()
         ];
 
-
-        $threeDSecureDetails = [
-            'AuthenticationResult'=>$this->getAuthenticationResult(),
-            'CAVV'=>$this->getCavvValue(),
-            'ECIIndicator'=>$this->getEciIndicatorValue(),
-            'TransactionStain'=>$this->getTransactionStain()
-        ];
-
         // FAC only accepts two digit state abbreviations from the USA
         if ( $billingDetails['BillToCountry'] == 840 )
         {
             $billingDetails['BillToState'] = $this->getCard()->validateState();
         }
 
-        return [
+        $data = [
             'TransactionDetails' => $transactionDetails,
             'CardDetails'        => $cardDetails,
             'MerchantResponseURL'=> $this->getMerchantResponseURL(),
             'BillingDetails'     => $billingDetails,
-            'ThreeDSecure Details'     => $threeDSecureDetails
         ];
+
+        return $data;
     }
 
     /**
@@ -178,6 +164,16 @@ class Authorize3DSRequest extends AbstractRequest
         return new Authorize3DSResponse($this, $xml);
     }
 
+    public function getMerchantResponseURL()
+    {
+        return $this->getParameter('merchantResponseURL');
+    }
+
+    public function setMerchantResponseURL($value)
+    {
+        return $this->setParameter('merchantResponseURL', $value);
+    }
+
     /**
      * @param boolean $value Create a tokenized card on FAC during an authorize request
      *
@@ -194,57 +190,5 @@ class Authorize3DSRequest extends AbstractRequest
     public function getCreateCard()
     {
         return $this->getParameter('createCard');
-    }
-
-    public function setAuthenticationResult($value)
-    {
-        return $this->setParameter('authenticationResult', $value);
-    }
-
-    public function setCavvValue($value)
-    {
-        return $this->setParameter('cavvValue', $value);
-    }
-
-    public function setEciIndicatorValue($value)
-    {
-        return $this->setParameter('eciIndicatorValue', (int) $value);
-    }
-
-    public function setTransactionStain($value)
-    {
-        return $this->setParameter('transactionStain', $value);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAuthenticationResult()
-    {
-        return $this->getParameter('authenticationResult');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCavvValue()
-    {
-        return $this->getParameter('cavvValue');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEciIndicatorValue()
-    {
-        return $this->getParameter('eciIndicatorValue');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTransactionStain()
-    {
-        return $this->getParameter('transactionStain');
     }
 }

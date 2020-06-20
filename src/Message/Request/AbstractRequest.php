@@ -89,7 +89,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     /**
      * @param mixed $data
-     * @return Response
+     * @return ResponseInterface
      */
     public function sendData($data)
     {
@@ -99,7 +99,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     protected function createResponse($data, $headers = [])
     {
-        return $this->response = new Response($this, $data, $headers);
+        return $this->response = $this->newResponse($data);
     }
 
     /**
@@ -163,5 +163,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function getCard()
     {
         return $this->getParameter('card');
+    }
+
+    public function getCurrencyNumeric()
+    {
+        return str_pad(parent::getCurrencyNumeric(), 3, 0, STR_PAD_LEFT);
     }
 }
