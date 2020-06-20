@@ -62,20 +62,6 @@ class Gateway extends AbstractGateway
         ];
     }
 
-    public function setMerchantId($value)
-    {
-        return $this->setParameter('merchantId', $value);
-    }
-
-    public function setMerchantPassword($value)
-    {
-        return $this->setParameter('merchantPassword', $value);
-    }
-
-    public function setAcquirerId($value)
-    {
-        return $this->setAcquirerId($value);
-    }
 
     /**
      * Authorize Request.

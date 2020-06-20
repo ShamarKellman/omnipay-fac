@@ -25,7 +25,7 @@ class HostedPurchaseRequest extends AbstractHostedPageRequest
      */
     public function getData()
     {
-        $this->validate('acquirerId', 'merchantId', 'merchantPassword', 'orderNumber', 'transactionCode');
+        $this->validate('acquirerId', 'merchantId', 'merchantPassword', 'transactionId', 'transactionCode');
 
         // Mandatory fields
         $data['Request'] = [
