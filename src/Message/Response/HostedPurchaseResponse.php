@@ -13,7 +13,7 @@ class HostedPurchaseResponse extends AbstractHostedPageResponse
      */
     public function isSuccessful()
     {
-        return false;
+        return isset($this->data[$this->requestResultName]['ResponseCode']) && $this->data[$this->requestResultName]['ResponseCode'] == '0';
     }
 
     /**

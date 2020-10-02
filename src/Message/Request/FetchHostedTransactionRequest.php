@@ -26,7 +26,7 @@ class FetchHostedTransactionRequest extends AbstractHostedPageRequest
      */
     public function getData()
     {
-        $this->validate('acquirerId', 'merchantId', 'merchantPassword', 'orderNumber');
+        $this->validate('acquirerId', 'merchantId', 'merchantPassword', 'transactionId');
 
         // Mandatory fields
         $data['Request'] = [

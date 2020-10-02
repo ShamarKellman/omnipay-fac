@@ -53,8 +53,6 @@ class AuthorizeRequest extends AbstractRequest
      * Validate and construct the data for the request
      *
      * @return array
-     * @throws InvalidRequestException
-     * @throws \Omnipay\Common\Exception\InvalidCreditCardException
      */
     public function getData()
     {
@@ -121,17 +119,27 @@ class AuthorizeRequest extends AbstractRequest
             'BillToFax'         => $this->getCard()->getFax()
         ];
 
+        $threeDSecureDetails = [
+            'AuthenticationResult'=>$this->getAuthenticationResult(),
+            'CAVV'=>$this->getCavvValue(),
+            'ECIIndicator'=>$this->getEciIndicatorValue(),
+            'TransactionStain'=>$this->getTransactionStain()
+        ];
+
         // FAC only accepts two digit state abbreviations from the USA
         if ( $billingDetails['BillToCountry'] == 840 )
         {
             $billingDetails['BillToState'] = $this->getCard()->validateState();
         }
 
-        return [
+        $data = [
             'TransactionDetails' => $transactionDetails,
             'CardDetails'        => $cardDetails,
-            'BillingDetails'     => $billingDetails
+            'BillingDetails'     => $billingDetails,
+            'ThreeDSecureDetails' => $threeDSecureDetails,
         ];
+
+        return $data;
     }
 
     /**
@@ -190,5 +198,58 @@ class AuthorizeRequest extends AbstractRequest
     public function getCreateCard()
     {
         return $this->getParameter('createCard');
+    }
+
+
+    public function setAuthenticationResult($value)
+    {
+        return $this->setParameter('authenticationResult', $value);
+    }
+
+    public function setCavvValue($value)
+    {
+        return $this->setParameter('cavvValue', $value);
+    }
+
+    public function setEciIndicatorValue($value)
+    {
+        return $this->setParameter('eciIndicatorValue', (int) $value);
+    }
+
+    public function setTransactionStain($value)
+    {
+        return $this->setParameter('transactionStain', $value);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthenticationResult()
+    {
+        return $this->getParameter('authenticationResult');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCavvValue()
+    {
+        return $this->getParameter('cavvValue');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEciIndicatorValue()
+    {
+        return $this->getParameter('eciIndicatorValue');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTransactionStain()
+    {
+        return $this->getParameter('transactionStain');
     }
 }
