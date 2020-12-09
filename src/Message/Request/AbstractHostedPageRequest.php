@@ -161,14 +161,7 @@ abstract class AbstractHostedPageRequest extends AbstractRequest
      */
     protected function getTransactionCode()
     {
-        $transactionCode = $this->transactionCode;
-        if($this->getRequireAvsCheck()) {
-            $transactionCode += 1;
-        }
-        if($this->getCreateCard()) {
-            $transactionCode += 128;
-        }
-        return $transactionCode;
+        return $this->getParameter('transactionCode');
     }
 
     /**
